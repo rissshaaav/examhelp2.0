@@ -1,7 +1,26 @@
-import React from 'react'
-import Card from '../components/Card'
+import React from "react";
+import Card from "../components/Card";
+import { useState, useEffect } from "react";
 
-const Books = () => {
+const Notes = () => {
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/books");
+        const data = await response.json();
+        setNotes(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching notes:", error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchNotes();
+  }, []);
   return (
     <section
       id="books"
@@ -11,15 +30,29 @@ const Books = () => {
       <div class="container-lg">
         <div class="text-center">
           <h2>
-            <i class="bi bi-info-circle-fill d-none d-md-inline"></i> Reference
-            Books
+            <i class="bi bi-info-circle-fill d-none d-md-inline"></i> Reference Books
           </h2>
-          <p class="lead text-muted">Lorem ipsum dolor sit amet.</p>
+          {/* <p class="lead text-muted">Lorem ipsum dolor sit amet.</p> */}
         </div>
-        <Card />
+        {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {notes.map((note) => (
+            <li key={note._id} class="list-unstyled">
+              <Card
+                title={note.title}
+                courseTitle={note.author}
+                courseCode={note.publishYear}
+                link={note.link}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Books
+export default Notes;

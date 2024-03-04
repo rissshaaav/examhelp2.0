@@ -1,7 +1,26 @@
 import React from "react";
 import Card from "../components/Card";
+import { useState, useEffect } from "react";
 
 const Notes = () => {
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/notes");
+        const data = await response.json();
+        setNotes(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching notes:", error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchNotes();
+  }, []);
   return (
     <section
       id="books"
@@ -13,9 +32,24 @@ const Notes = () => {
           <h2>
             <i class="bi bi-info-circle-fill d-none d-md-inline"></i> Notes
           </h2>
-          <p class="lead text-muted">Lorem ipsum dolor sit amet.</p>
+          {/* <p class="lead text-muted">Lorem ipsum dolor sit amet.</p> */}
         </div>
-        <Card />
+        {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {notes.map((note) => (
+            <li key={note._id} class="list-unstyled">
+              <Card
+                title={note.title}
+                courseTitle={note.courseTitle}
+                courseCode={note.courseCode}
+                link={note.link}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
       </div>
     </section>
   );
