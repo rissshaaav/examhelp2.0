@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/Home';
 import Books from './pages/Books';
-import Help from './pages/Help';
+import Contribute from './pages/Contribute';
 import Notes from './pages/Notes';
 import PYQs from './pages/PYQs';
 
@@ -18,7 +18,7 @@ function App() {
           <Route path="/Notes" element={<Notes/>} />
           <Route path="/PYQs" element={<PYQs/>} />
           <Route path="/Books" element={<Books/>} />
-          <Route path="/Contribute" element={<Help/>} />
+          <Route path="/Contribute" element={<Contribute/>} />
           {/* <Route path="/Contribute" element={<Contribute/>} /> */}
         </Routes>
       </HashRouter>
