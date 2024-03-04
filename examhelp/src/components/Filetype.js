@@ -25,9 +25,9 @@ const Filetype = (PYQ) => {
               </div> */}
 
 
-              <label for="subject" class="form-label">
+              {/* <label for="subject" class="form-label">
                 Subject:
-              </label>
+              </label> */}
               <div class="mb-4 input-group">
                 <span class="input-group-text">
                   <i class="bi bi-person-fill"></i>
